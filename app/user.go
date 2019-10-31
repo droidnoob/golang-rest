@@ -79,12 +79,12 @@ func Login(email string, password string) (string, bool) {
 	err := GetDB().Table("users").Where("email=?", email).First(user).Error
 
 	if err != nil {
-		return "Error occured", false
+		return "Invalid Login or Password", false
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if err != nil {
-		return "Password is incorrect", false
+		return "Invalid Login or Password", false
 	}
 
 	user.Password = ""
