@@ -10,7 +10,7 @@ import (
 
 func CreateUser(c *gin.Context) {
 	user := app.User{}
-	c.BindJSON(&user)
+	c.ShouldBind(&user)
 	token, ok := user.Create()
 	if !ok {
 		c.JSON(200, gin.H{
@@ -27,7 +27,7 @@ func CreateUser(c *gin.Context) {
 
 func LoginUser(c *gin.Context) {
 	user := app.User{}
-	c.BindJSON(&user)
+	c.ShouldBind(&user)
 	token, ok := app.Login(user.Email, user.Password)
 	if !ok {
 		c.JSON(200, gin.H{
@@ -83,7 +83,7 @@ func EditUser(c *gin.Context) {
 	}
 	email := claims["Email"]
 	updateUser := &app.User{}
-	c.BindJSON(&updateUser)
+	c.ShouldBind(&updateUser)
 	message, ok := updateUser.EditUser(email)
 	if !ok {
 		c.JSON(200, gin.H{
